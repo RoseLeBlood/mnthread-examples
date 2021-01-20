@@ -13,6 +13,9 @@ protected:
 };
 
 extern "C" void app_main() {
+    std::cout << "Thank you for use miniThread v. " << mnversion_t::instance().to_string() << std::endl;
+    std::cout << "basic tasklet example" << std::endl;
+
     test_tasklet taskLet_test;
 
     err_cheak(taskLet_test.create(0), ERR_COROUTINE_OK);

@@ -71,6 +71,9 @@ protected:
 };
 
 extern "C" void app_main() {
+    std::cout << "Thank you for use miniThread v. " << mnversion_t::instance().to_string() << std::endl;
+    std::cout << "basic timer example" << std::endl;
+
     int imain = 0;
 
     test_timer_onshot mOneShot(TEST_TIMER_ONESHOT_TIME);
