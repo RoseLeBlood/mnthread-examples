@@ -1,5 +1,7 @@
 #include <miniThread.hpp>
 
+using namespace mn;
+
 #define TEST_TIMER_PERIOD_TIME 100
 #define TEST_TIMER_ONESHOT_TIME 1000
 
@@ -71,7 +73,7 @@ protected:
 };
 
 extern "C" void app_main() {
-    std::cout << "Thank you for use miniThread v. " << mnversion_t::instance().to_string() << std::endl;
+    std::cout << "Thank you for use miniThread v. " << version::instance().to_string() << std::endl;
     std::cout << "basic timer example" << std::endl;
 
     int imain = 0;
@@ -97,7 +99,7 @@ extern "C" void app_main() {
     }
 
     // when timer are dead then panic!!
-    mn_panic();
+    panic();
 }
 
 
@@ -105,7 +107,7 @@ extern "C" void app_main() {
 
 int err_cheak(int error, int OK) {
     if(error != OK) {
-        mn_panic();
+        panic();
     }
     return error;
 }

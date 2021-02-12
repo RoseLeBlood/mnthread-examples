@@ -1,5 +1,7 @@
 #include <miniThread.hpp>
 
+using namespace mn;
+
 #include <stdio.h>
 #include <iostream>
 
@@ -34,7 +36,7 @@ private:
 };
 
 extern "C" void app_main() {
-    std::cout << "Thank you for use miniThread v. " << mnversion_t::instance().to_string() << std::endl;
+    std::cout << "Thank you for use miniThread v. " << version::instance().to_string() << std::endl;
     std::cout << "basic mutex example" << std::endl;
 
     mutex_t * __pMutexToTest = new mutex_t();
@@ -46,5 +48,5 @@ extern "C" void app_main() {
 
     while(true) { }
 
-    mn_panic();
+    panic();
 }

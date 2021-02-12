@@ -2,6 +2,8 @@
 #include <mn_schedular.hpp>
 #include <iostream>
 
+using namespace mn;
+
 int err_cheak(int error, int OK) ;
 
 #define TASKLET_TEST_NUMBER     3
@@ -53,7 +55,7 @@ private:
 };
 
 extern "C" void app_main() {
-    std::cout << "Thank you for use miniThread v. " << mnversion_t::instance().to_string() << std::endl;
+    std::cout << "Thank you for use miniThread v. " << version::instance().to_string() << std::endl;
     std::cout << "basic tasklet example" << std::endl;
 
     test_tasklet_task test_tasklet_task;
@@ -77,5 +79,5 @@ void err_cheak(int error, int OK) {
         printf("The task are created\n");
         return;
     }
-    mn_panic();
+    panic();
 }
