@@ -90,7 +90,7 @@ extern "C" void app_main() {
     err_cheak(mPeriodTimer.active(), ERR_TIMER_OK);
 
     // Wait
-    mn_usleep(5);
+    mn::usleep(5);
 
     // while - cheak the period timer run
     while( ((bool)mPeriodTimer) ) {

@@ -1,5 +1,11 @@
-#include <miniThread.hpp>
+/*
+Advanced Memory Usage is available via "PlatformIO Home > Project Inspect"
+RAM:   [=         ]   5.0% (used 16392 bytes from 327680 bytes)
+Flash: [====      ]  38.2% (used 400064 bytes from 1048576 bytes)
+*/
 
+#include <miniThread.hpp>
+ 
 using namespace mn;
 
 #include <stdio.h>
@@ -7,8 +13,8 @@ using namespace mn;
 
 class mutexSimpleTestTask : public basic_task {
 public:
-    TestThread(std::string name, mutex_t& lock, int sleepMS, int cpu)
-        : basic_task(name), Lock(lock), m_sleepMS(sleepMS) { start(cpu); };
+    mutexSimpleTestTask(const char* name, mutex_t& lock, int sleepMS, int cpu)
+        : basic_task(name), m_refLock(lock), m_sleepMS(sleepMS) { start(cpu); };
 
 protected:
     virtual void  on_start() {  
@@ -27,24 +33,26 @@ protected:
 private:
     void test_lock_print() {
         automutx_t lock(m_refLock);
-        std::cout << "test_lock_print.on_task@ " << m_strName << std::endl;
+        for (int i = 0; i < 10; i++) {
+            std::cout << "test_lock_print.on_task@ " << m_strName << " " << i << std::endl;
+        }
     }
 
 private:
-    int m_sleepMS;
     mutex_t& m_refLock;
+    int m_sleepMS;
 };
 
 extern "C" void app_main() {
     std::cout << "Thank you for use miniThread v. " << version::instance().to_string() << std::endl;
     std::cout << "basic mutex example" << std::endl;
 
-    mutex_t * __pMutexToTest = new mutex_t();
+    mutex_t __pMutexToTest;
 
-    mutexSimpleTestTask _test1("testltask1", *__pMutexToTest, 400, 1);
-    mutexSimpleTestTask _test2("testltask2", *__pMutexToTest, 300, 1);
-    mutexSimpleTestTask _test3("testltask3", *__pMutexToTest, 300, 1);
-    mutexSimpleTestTask _test4("testltask4", *__pMutexToTest, 300, 1);
+    mutexSimpleTestTask _test1("testltask1", __pMutexToTest, 400, 1);
+    mutexSimpleTestTask _test2("testltask2", __pMutexToTest, 300, 1);
+    mutexSimpleTestTask _test3("testltask3", __pMutexToTest, 300, 1);
+    mutexSimpleTestTask _test4("testltask4", __pMutexToTest, 300, 1);
 
     while(true) { }
 

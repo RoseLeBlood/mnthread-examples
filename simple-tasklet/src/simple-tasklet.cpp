@@ -4,7 +4,7 @@
 
 using namespace mn;
 
-int err_cheak(int error, int OK) ;
+void err_cheak(int error, int OK);
 
 #define TASKLET_TEST_NUMBER     3
 #define TASKLET_TEST_DELAY      5
@@ -19,6 +19,7 @@ protected:
         xInterfaceToService = ( BaseType_t ) arg;
 
         printf("[TSK: %d] param: %d\n", m_iId,  xInterfaceToService);
+        return true;
     }
 private:
     char m_iId;
@@ -32,8 +33,8 @@ public:
     virtual void on_start() override {
         std::cout << "start task test_tasklet_task" << std::endl;
 
-        for (char i = 0; i < TASKLET_TEST_NUMBER; i++) {
-            m_testTask[i] = new test_tasklet(i);
+        for (int i = 0; i < TASKLET_TEST_NUMBER; i++) {
+            m_testTask[i] = new test_tasklet((char)i);
         }
     }
     virtual void*  on_task() override {
@@ -41,7 +42,7 @@ public:
         while(true) {
             basic_task::usleep(TASKLET_TEST_DELAY);
             
-            for (char i = 0; i < TASKLET_TEST_NUMBER; i++) {
+            for (int i = 0; i < TASKLET_TEST_NUMBER; i++) {
                 m_testTask[i]->schedule(m_iParameter);
             }
             m_iParameter++;
@@ -50,8 +51,8 @@ public:
         return NULL;
     }   
 private:
-    test_tasklet* m_testTask[TASKLET_TEST_NUMBER];
     int m_iParameter;
+    test_tasklet* m_testTask[TASKLET_TEST_NUMBER];
 };
 
 extern "C" void app_main() {
@@ -62,7 +63,7 @@ extern "C" void app_main() {
 
     err_cheak(test_tasklet_task.start(), ERR_TASK_OK);
 
-    mnschedular::start();
+    schedular::start();
 
     std::cout << "scheduler ended" << std::endl;
 }

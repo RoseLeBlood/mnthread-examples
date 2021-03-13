@@ -12,11 +12,10 @@ public:
 };
 
 hello_world_task::hello_world_task()
-    : basic_task("HelloWorld", 1)  { }
+    : basic_task("HelloWorld", basic_task::PriorityNormal)  { }
 
 void*  hello_world_task::on_task() {
-    basic_thread::on_task();
-
+   
     int id = get_id();
     int core = get_on_core();
 
@@ -34,7 +33,7 @@ extern "C" void app_main() {
     hello_world_task tasks[NUMBER_OF_TEST_THREADS];
 
     for(int i = 0; i < NUMBER_OF_TEST_THREADS; i++) {
-        tasks[i].create( i % 2 );
+        tasks[i].start( i % 2 );
     }
 
     panic();
