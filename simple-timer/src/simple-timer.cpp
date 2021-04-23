@@ -7,14 +7,17 @@ using namespace mn;
 
 #define TEST_TIMER_MAIN_DELAY   10
 
+
+#define _PROJECT_NAME "simple timer example"
+
 int err_cheak(int error, int OK) ;
 
 /**
  * The test one shot timer
- */ 
+ */
 class test_timer_onshot : public freertos_timer_t {
 public:
-    test_timer_onshot() 
+    test_timer_onshot()
           : freertos_timer_t("OnShot Test Timer", TEST_TIMER_ONESHOT_TIME, true) {}
 protected:
     /**
@@ -28,24 +31,24 @@ protected:
 
     /**
      * You can override this functions, call befor on_timer
-     */ 
-    virtual void on_enter() { 
+     */
+    virtual void on_enter() {
         printf("created the onshot timer\n" );
     }
     /**
      * You can override this functions, call after on_timer
-     */ 
-    virtual void on_exit() { 
+     */
+    virtual void on_exit() {
         printf("exit the onshot timer\n" );
     }
 };
 
 /**
  * The test period timer
- */ 
+ */
 class test_timer_period : public mtimer_t {
 public:
-    test_timer_period() 
+    test_timer_period()
           : mtimer_t("Period Test Timer", TEST_TIMER_PERIOD_TIME, false) {}
 protected:
     /**
@@ -59,20 +62,22 @@ protected:
 
     /**
      * You can override this functions, call befor on_timer
-     */ 
-    virtual void on_enter() { 
+     */
+    virtual void on_enter() {
         printf("created the period timer\n" );
     }
     /**
      * You can override this functions, call after on_timer
-     */ 
-    virtual void on_exit() { 
+     */
+    virtual void on_exit() {
         printf("exit the period timer\n" );
     }
 
 };
+MN_EXTERNC_BEGINN
 
-extern "C" void app_main() {
+void app_main() {
+	MN_THREAD_VERSION_INFO(_PROJECT_NAME);
     std::cout << "Thank you for use miniThread v. " << version::instance().to_string() << std::endl;
     std::cout << "basic timer example" << std::endl;
 
@@ -101,6 +106,8 @@ extern "C" void app_main() {
     // when timer are dead then panic!!
     panic();
 }
+
+MN_EXTERNC_END
 
 
 

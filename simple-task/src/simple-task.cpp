@@ -3,8 +3,9 @@
 using namespace mn;
 
 #define NUMBER_OF_TEST_THREADS      2
+#define _PROJECT_NAME 				"basic task example"
 
-class hello_world_task : public basic_task { 
+class hello_world_task : public basic_task {
 public:
     hello_world_task();
 
@@ -15,7 +16,7 @@ hello_world_task::hello_world_task()
     : basic_task("HelloWorld", basic_task::PriorityNormal)  { }
 
 void*  hello_world_task::on_task() {
-   
+
     int id = get_id();
     int core = get_on_core();
 
@@ -25,10 +26,10 @@ void*  hello_world_task::on_task() {
 
     return NULL;
 }
+MN_EXTERNC_BEGINN
 
-extern "C" void app_main() {
-    std::cout << "Thank you for use miniThread v. " << version::instance().to_string() << std::endl;
-    std::cout << "basic task example" << std::endl;
+void app_main() {
+    MN_THREAD_VERSION_INFO(_PROJECT_NAME);
 
     hello_world_task tasks[NUMBER_OF_TEST_THREADS];
 
@@ -38,3 +39,5 @@ extern "C" void app_main() {
 
     panic();
 }
+
+MN_EXTERNC_END

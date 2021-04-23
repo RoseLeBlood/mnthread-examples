@@ -3,9 +3,7 @@
 using namespace mn;
 
 #define TEST_ELEMENTS 10
-
-
-
+#define _PROJECT_NAME "simple __mempool example"
 
 struct mempool_tester {
     using mempool_t = mn::memory::basic_mempool_t<int, TEST_ELEMENTS>;
@@ -18,7 +16,7 @@ struct mempool_tester {
             test_allocate();
             test_free();
 
-            basic_task::sleep(1);
+            basic_task::sleep(5);
         }
     }
     void test_allocate( ) {
@@ -35,7 +33,7 @@ struct mempool_tester {
     void test_free() {
         std::string text = "";
         std::cout << "Free test " << std::endl << std::endl;
-        
+
         for(int i= 0; i < TEST_ELEMENTS + 1; i++) {
             text = __mempool.free(test_array[i]) ? " free" : " not free";
             std::cout << i << text << std::endl;
@@ -47,12 +45,16 @@ struct mempool_tester {
 };
 
 
-extern "C" void app_main() {
-    std::cout << "Thank you for use miniThread v. " << mn::version::instance().to_string() << std::endl;
-    std::cout << "simple __mempool test" << std::endl;
+MN_EXTERNC_BEGINN
+
+void app_main() {
+	MN_THREAD_VERSION_INFO(_PROJECT_NAME);
+
 
     mempool_tester tester;
     tester.test();
-    
+
 }
+
+MN_EXTERNC_END
 

@@ -5,7 +5,9 @@ Flash: [====      ]  38.2% (used 400064 bytes from 1048576 bytes)
 */
 
 #include <miniThread.hpp>
- 
+
+#define _PROJECT_NAME "simple mutex example"
+
 using namespace mn;
 
 #include <stdio.h>
@@ -17,10 +19,10 @@ public:
         : basic_task(name), m_refLock(lock), m_sleepMS(sleepMS) { start(cpu); };
 
 protected:
-    virtual void  on_start() {  
+    virtual void  on_start() {
         std::cout << "on_start@" << m_strName << std::endl;
     }
-    virtual void  on_kill() {  
+    virtual void  on_kill() {
         std::cout << "on_kill@" << m_strName << std::endl;
     }
     virtual void* on_task() {
@@ -43,9 +45,10 @@ private:
     int m_sleepMS;
 };
 
-extern "C" void app_main() {
-    std::cout << "Thank you for use miniThread v. " << version::instance().to_string() << std::endl;
-    std::cout << "basic mutex example" << std::endl;
+MN_EXTERNC_BEGINN
+
+void app_main() {
+	MN_THREAD_VERSION_INFO(_PROJECT_NAME);
 
     mutex_t __pMutexToTest;
 
@@ -58,3 +61,5 @@ extern "C" void app_main() {
 
     panic();
 }
+
+MN_EXTERNC_END

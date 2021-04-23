@@ -13,8 +13,8 @@ void err_cheak(int error, int OK);
 class test_tasklet : public tasklet_t {
 public:
     test_tasklet(char id) : tasklet_t(), m_iId(id) { }
-protected: 
-    bool on_coroutine(uint32_t arg) {
+protected:
+    bool on_tasklet(uint32_t arg) {
         BaseType_t xInterfaceToService;
         xInterfaceToService = ( BaseType_t ) arg;
 
@@ -25,9 +25,9 @@ private:
     char m_iId;
 };
 
-class test_tasklet_task : public basic_task { 
+class test_tasklet_task : public basic_task {
 public:
-    test_tasklet_task() 
+    test_tasklet_task()
         : basic_task("test_tasklet_task"), m_iParameter(TASKLET_TEST_PARAMETER) { }
 
     virtual void on_start() override {
@@ -41,7 +41,7 @@ public:
 
         while(true) {
             basic_task::usleep(TASKLET_TEST_DELAY);
-            
+
             for (int i = 0; i < TASKLET_TEST_NUMBER; i++) {
                 m_testTask[i]->schedule(m_iParameter);
             }
@@ -49,15 +49,16 @@ public:
         }
         // Never reach
         return NULL;
-    }   
+    }
 private:
     int m_iParameter;
     test_tasklet* m_testTask[TASKLET_TEST_NUMBER];
 };
 
-extern "C" void app_main() {
-    std::cout << "Thank you for use miniThread v. " << version::instance().to_string() << std::endl;
-    std::cout << "basic tasklet example" << std::endl;
+MN_EXTERNC_BEGINN
+
+void app_main() {
+	MN_THREAD_VERSION_INFO("basic tasklet example");
 
     test_tasklet_task test_tasklet_task;
 
@@ -82,3 +83,5 @@ void err_cheak(int error, int OK) {
     }
     panic();
 }
+
+MN_EXTERNC_END
