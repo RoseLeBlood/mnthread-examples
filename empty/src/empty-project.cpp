@@ -1,5 +1,5 @@
+#include <cstring>
 #include <miniThread.hpp>
-#include <iostream>
 
 #define _PROJECT_NAME "simple empty example"
 

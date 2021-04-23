@@ -1,6 +1,8 @@
+#include <stdio.h>
+#include <iostream>
+
 #include <miniThread.hpp>
 #include <mn_schedular.hpp>
-#include <iostream>
 
 using namespace mn;
 

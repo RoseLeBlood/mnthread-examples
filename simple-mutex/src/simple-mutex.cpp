@@ -4,14 +4,15 @@ RAM:   [=         ]   5.0% (used 16392 bytes from 327680 bytes)
 Flash: [====      ]  38.2% (used 400064 bytes from 1048576 bytes)
 */
 
+#include <stdio.h>
+#include <iostream>
 #include <miniThread.hpp>
 
 #define _PROJECT_NAME "simple mutex example"
 
 using namespace mn;
 
-#include <stdio.h>
-#include <iostream>
+
 
 class mutexSimpleTestTask : public basic_task {
 public:

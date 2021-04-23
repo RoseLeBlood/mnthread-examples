@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <iostream>
 #include <miniThread.hpp>
 
 using namespace mn;

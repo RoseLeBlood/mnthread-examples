@@ -1,3 +1,4 @@
+#include <cstring>
 #include <miniThread.hpp>
 
 using namespace mn;
