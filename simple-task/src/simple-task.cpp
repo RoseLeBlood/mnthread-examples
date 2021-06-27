@@ -15,14 +15,14 @@ public:
 };
 
 hello_world_task::hello_world_task()
-    : basic_task("HelloWorld", basic_task::PriorityNormal)  { }
+    : basic_task("HelloWorld", basic_task::priority::Normal)  { }
 
 void*  hello_world_task::on_task() {
 
     int id = get_id();
     int core = get_on_core();
 
-    for(;;) {
+    for(int i = 0; i < 10; i++) {
         printf("[%d @ %d] Hello World!!\n", id, core );
     }
 
@@ -39,7 +39,11 @@ void app_main() {
         tasks[i].start( i % 2 );
     }
 
-    panic();
+    for(int i = 0; i < NUMBER_OF_TEST_THREADS; i++) {
+        tasks[i].join();
+    }
+
+    esp_restart();
 }
 
 MN_EXTERNC_END
